@@ -70,7 +70,7 @@ read -p "InnoDB y or n (default: y)? " INNODB_CONFIG
 
 case "$INNODB_CONFIG" in
    "y"|"")
-        sed -i "/.*'mysql' => \[.*/,/.*'pgsql' => \[.*/s/.*'engine' => '',.*/            'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',/" ./config/database.php
+        sed -i "/.*'mysql' => \[.*/,/.*'pgsql' => \[.*/s/.*'engine' =>.*/            'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',/" ./config/database.php
         ;;
    "n")
         echo "skipping innodb config"
@@ -136,8 +136,8 @@ cat <<EOF >_helpers.scss
 EOF
 
 # edit sass variables file
-sed -i "s/.*\$body-bg: #f5f8fa;*/\$body-bg: #fff;/" _variables.scss
-sed -i "s/.*\$font-family-sans-serif: \"Raleway\", sans-serif;.*/\$font-family-sans-serif: \"Lato\", sans-serif;/" _variables.scss
+sed -i "s/.*\$body-bg:*/\$body-bg: #fff;/" _variables.scss
+sed -i "s/.*\$font-family-sans-serif: .*/\$font-family-sans-serif: \"Lato\", sans-serif;/" _variables.scss
 
 # TODO edit app sass file
 
