@@ -7,20 +7,17 @@
 # TODO - Git init
 # TODO - silent
 # TODO - config file
-clear
 echo "Bootstrapping Laravel Project"
 
 # get laravel project name
-echo "Name your laravel project"
-read LARAVEL_NAME
+read -p "Name your laravel project: " LARAVEL_NAME
 
 # run laravel new
 laravel new ${LARAVEL_NAME}
 cd ${LARAVEL_NAME}
 
 # swap preset
-echo "vue, react or none (default: react)?"
-read PRESET
+read -p "vue, react or none (default: react)? " PRESET
 
 case "$PRESET" in
    "react"|"")
@@ -41,8 +38,7 @@ npm install && npm run dev
 php artisan key:generate
 
 # bootstrap login system
-echo "Auth scaffoling y or n (default: y)?"
-read AUTH_ENABLED
+read -p "Auth scaffoling y or n (default: y)? " AUTH_ENABLED
 
 case "$AUTH_ENABLED" in
    "y"|"")
@@ -55,11 +51,9 @@ case "$AUTH_ENABLED" in
 esac
 
 # only do register question if auth scaffolded
-if [ $AUTH_ENABLED == "y" ]
-then
+if [ "$AUTH_ENABLED" == "y" ]; then
     # Turn register page off
-    echo "Disable Register y or n (default: y)?"
-    read REGISTER_DISABLED
+    read -p "Disable Register y or n (default: y)? " REGISTER_DISABLED
 
     case "$REGISTER_DISABLED" in
         "y"|"")
@@ -72,8 +66,7 @@ then
 fi
 
 # config Database
-echo "InnoDB y or n (default: y)?"
-read INNODB_CONFIG
+read -p "InnoDB y or n (default: y)? " INNODB_CONFIG
 
 case "$INNODB_CONFIG" in
    "y"|"")
@@ -90,8 +83,7 @@ sed -i "s/^APP_NAME=.*/APP_NAME=${LARAVEL_NAME}/" .env
 
 # database settings
 # TODO default db name
-echo "What to name database?"
-read $DB_NAME
+read -p "What to name database? " DB_NAME
 sed -i "s/^DB_USERNAME=.*/DB_USERNAME=root/" .env
 sed -i "s/^DB_DATABASE=.*/DB_DATABASE=${DB_NAME}/" .env
 
