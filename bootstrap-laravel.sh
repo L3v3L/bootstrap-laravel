@@ -1,12 +1,5 @@
 #!/bin/sh
 # This script will bootstrap a laravel project
-# TODO accept arguments for:
-# TODO - Project name
-# TODO - React or Vue
-# TODO - Authenticate Bootstrap
-# TODO - Git init
-# TODO - silent
-# TODO - config file
 echo "Bootstrapping Laravel Project"
 
 # get laravel project name
@@ -78,18 +71,14 @@ case "$INNODB_CONFIG" in
 esac
 
 # Tedit .env file
-# TODO ask if want to rename app
 sed -i "s/^APP_NAME=.*/APP_NAME=${LARAVEL_NAME}/" .env
 
 # database settings
-# TODO default db name
 read -p "What to name database? " DB_NAME
 sed -i "s/^DB_USERNAME=.*/DB_USERNAME=root/" .env
 sed -i "s/^DB_DATABASE=.*/DB_DATABASE=${DB_NAME}/" .env
 
-# TODO optionally create database
-
-# TODO fix sass folder
+# fix sass folder
 cd resources/sass
 mkdir pages/
 
@@ -139,11 +128,9 @@ EOF
 sed -i "s/.*\$body-bg:.*/\$body-bg: #fff;/" _variables.scss
 sed -i "s/.*\$font-family-sans-serif:.*/\$font-family-sans-serif: \"Lato\", sans-serif;/" _variables.scss
 
-# TODO edit app sass file
-
 cd -
 
-# TODO fix blade files
+# fix blade files
 cd resources/views
 
 rm welcome.blade.php
@@ -174,9 +161,3 @@ cd -
 
 # run npm dev
 npm run dev
-
-# TODO add to gitignore
-#/public/css/app.css
-#/public/js/app.js
-
-# TODO commit and push
