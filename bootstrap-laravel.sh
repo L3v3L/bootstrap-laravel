@@ -2,16 +2,35 @@
 # This script will bootstrap a laravel project
 echo "Bootstrapping Laravel Project"
 
+## Prompts
 # get laravel project name
 read -p "Name your laravel project: " LARAVEL_NAME
 
+# get preset
+read -p "vue, react or none (default: react)? " PRESET
+
+# get Auth scaffolding option
+read -p "Auth scaffolding y or n (default: y)? " AUTH_ENABLED
+
+# only do register question if auth scaffolded
+if [ "$AUTH_ENABLED" != "n" ]; then
+    # Turn register page off
+    read -p "Disable Register y or n (default: y)? " REGISTER_DISABLED
+fi
+
+# get Innodb option
+read -p "InnoDB y or n (default: y)? " INNODB_CONFIG
+
+# get database name
+read -p "What to name database? " DB_NAME
+
+## Processes
 # run laravel new
 laravel new ${LARAVEL_NAME}
 cd ${LARAVEL_NAME}
 
-# swap preset
-read -p "vue, react or none (default: react)? " PRESET
 
+# swap preset
 case "$PRESET" in
    "react"|"")
         php artisan preset react
@@ -31,11 +50,8 @@ npm install && npm run dev
 php artisan key:generate
 
 # bootstrap login system
-read -p "Auth scaffoling y or n (default: y)? " AUTH_ENABLED
-
 case "$AUTH_ENABLED" in
    "y"|"")
-        AUTH_ENABLED="y"
         php artisan make:auth
         ;;
    "n")
@@ -44,10 +60,8 @@ case "$AUTH_ENABLED" in
 esac
 
 # only do register question if auth scaffolded
-if [ "$AUTH_ENABLED" = "y" ]; then
+if [ "$AUTH_ENABLED" != "n" ]; then
     # Turn register page off
-    read -p "Disable Register y or n (default: y)? " REGISTER_DISABLED
-
     case "$REGISTER_DISABLED" in
         "y"|"")
             sed -i "s/.*\$this->middleware('guest');.*/        \/\/This will disable register form for both auth and guest\n        \$this->middleware('auth');\n&/" ./app/Http/Controllers/Auth/RegisterController.php
@@ -59,8 +73,6 @@ if [ "$AUTH_ENABLED" = "y" ]; then
 fi
 
 # config Database
-read -p "InnoDB y or n (default: y)? " INNODB_CONFIG
-
 case "$INNODB_CONFIG" in
    "y"|"")
         sed -i "/.*'mysql' => \[.*/,/.*'pgsql' => \[.*/s/.*'engine' =>.*/            'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',/" ./config/database.php
@@ -74,7 +86,6 @@ esac
 sed -i "s/^APP_NAME=.*/APP_NAME=${LARAVEL_NAME}/" .env
 
 # database settings
-read -p "What to name database? " DB_NAME
 sed -i "s/^DB_USERNAME=.*/DB_USERNAME=root/" .env
 sed -i "s/^DB_DATABASE=.*/DB_DATABASE=${DB_NAME}/" .env
 
