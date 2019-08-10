@@ -51,7 +51,7 @@ case "$AUTH_ENABLED" in
 esac
 
 # only do register question if auth scaffolded
-if [ "$AUTH_ENABLED" == "y" ]; then
+if [ "$AUTH_ENABLED" = "y" ]; then
     # Turn register page off
     read -p "Disable Register y or n (default: y)? " REGISTER_DISABLED
 
