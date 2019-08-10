@@ -136,8 +136,8 @@ cat <<EOF >_helpers.scss
 EOF
 
 # edit sass variables file
-sed -i "s/.*\$body-bg:*/\$body-bg: #fff;/" _variables.scss
-sed -i "s/.*\$font-family-sans-serif: .*/\$font-family-sans-serif: \"Lato\", sans-serif;/" _variables.scss
+sed -i "s/.*\$body-bg:.*/\$body-bg: #fff;/" _variables.scss
+sed -i "s/.*\$font-family-sans-serif:.*/\$font-family-sans-serif: \"Lato\", sans-serif;/" _variables.scss
 
 # TODO edit app sass file
 
